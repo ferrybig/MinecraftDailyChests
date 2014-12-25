@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.bukkit.ChatColor;
+import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -61,9 +63,25 @@ public class DailyChest extends JavaPlugin {
         }
         switch (command.getName()) {
             case "addChest": {
-
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
+                    if (this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
+                        sender.sendMessage("There is already a chest defined at that location!");
+                        return true;
+                    }
+                    if (loc.getBlock().getState() instanceof Chest) {
+                        this.getConfig().getConfigurationSection("chests").createSection(loc.toString());
+                        sender.sendMessage("Added chest succesfully");
+                    } else {
+                        sender.sendMessage("You need to look at a chest");
+                        return true;
+                    }
+                } else {
+                    sender.sendMessage("Adding chests from the console isn't supported at the time");
+                }
             }
-            break;
+            return true;
             case "changeChestItems": {
 
             }
@@ -76,14 +94,14 @@ public class DailyChest extends JavaPlugin {
                 List<String> toRemove = new ArrayList<>();
                 for (String str : this.getConfig().getConfigurationSection("chests").getKeys(false)) {
                     BlockLocation chest = BlockLocation.parseLocation(str);
-                    if(chest == null) {
+                    if (chest == null) {
                         toRemove.add(str);
                         continue;
                     }
                     sender.sendMessage(str);
                 }
-                for(String remove : toRemove) {
-                    this.getConfig().getConfigurationSection("chests").set(remove,null);
+                for (String remove : toRemove) {
+                    this.getConfig().getConfigurationSection("chests").set(remove, null);
                 }
             }
             break;
