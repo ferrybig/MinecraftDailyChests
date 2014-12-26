@@ -87,9 +87,20 @@ public class DailyChest extends JavaPlugin {
             }
             break;
             case "removeChest": {
-
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
+                    if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
+                        sender.sendMessage("There is a chest there!");
+                        return true;
+                    }
+                    sender.sendMessage("Removed chest at " + loc + "!");
+                    this.getConfig().getConfigurationSection("chests").set(loc.toString(), null);
+                } else {
+                    sender.sendMessage("Adding chests from the console isn't supported at the time");
+                }
             }
-            break;
+            return true;
             case "listChests": {
                 List<String> toRemove = new ArrayList<>();
                 for (String str : this.getConfig().getConfigurationSection("chests").getKeys(false)) {
