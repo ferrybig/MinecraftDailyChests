@@ -82,7 +82,15 @@ public class DailyChest extends JavaPlugin {
                 }
             }
             return true;
-            case "changeChestItems": {
+            case "addChestItems": {
+
+            }
+            break;
+            case "listChestItems": {
+
+            }
+            break;
+            case "removeChestItems": {
 
             }
             break;
