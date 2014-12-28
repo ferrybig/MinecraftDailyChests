@@ -99,7 +99,7 @@ public class DailyChest extends JavaPlugin {
                     Player player = (Player) sender;
                     BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
                     if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
-                        sender.sendMessage("There is a chest there!");
+                        sender.sendMessage("There is no chest there!");
                         return true;
                     }
                     sender.sendMessage("Removed chest at " + loc + "!");
