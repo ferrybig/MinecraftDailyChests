@@ -95,6 +95,19 @@ public class DailyChest extends JavaPlugin {
                     }
                     sender.sendMessage("Items inside this chest");
                     sender.sendMessage(this.getConfig().getConfigurationSection("chests").getList("items").toString());
+                } else {
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
+                        if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
+                            sender.sendMessage("There is no chest there!");
+                            return true;
+                        }
+                        sender.sendMessage("Items inside this chest");
+                        sender.sendMessage(this.getConfig().getConfigurationSection("chests").getList("items").toString());
+                    } else {
+                        sender.sendMessage("Adding chests from the console isn't supported at the time");
+                    }
                 }
             }
             break;
