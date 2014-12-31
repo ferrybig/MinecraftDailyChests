@@ -87,7 +87,7 @@ public class DailyChest extends JavaPlugin {
             }
             break;
             case "listChestItems": {
-                if(args.length > 1) {
+                if (args.length > 1) {
                     String loc = args[0];
                     if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc)) {
                         sender.sendMessage("There is no chest there!");
