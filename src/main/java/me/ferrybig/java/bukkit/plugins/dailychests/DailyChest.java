@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -83,7 +84,24 @@ public class DailyChest extends JavaPlugin {
             }
             return true;
             case "addChestItems": {
-
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
+                    if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
+                        sender.sendMessage("No chest found, look at a chest!");
+                        return true;
+                    }
+                    if (loc.getBlock().getState() instanceof Chest) {
+                        ConfigurationSection c = this.getConfig().getConfigurationSection("chests").getConfigurationSection(loc.toString());
+                        ((List<Object>)c.getList("items")).add(player.getItemInHand());
+                        sender.sendMessage("Added chest succesfully");
+                    } else {
+                        sender.sendMessage("You need to look at a chest");
+                        return true;
+                    }
+                } else {
+                    sender.sendMessage("Adding chests from the console isn't supported at the time");
+                }
             }
             break;
             case "listChestItems": {
