@@ -14,10 +14,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class DailyChest extends JavaPlugin {
+public class DailyChest extends JavaPlugin implements Listener {
 
     public void sendMessage(CommandSender sender, String message) {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix", "[DailyChests by ferrybig]") + message));
@@ -50,6 +53,11 @@ public class DailyChest extends JavaPlugin {
     private void save() {
         this.saveConfig();
         this.getLogger().info("AutoSaved!");
+    }
+    
+    @EventHandler
+    public void onEvent(PlayerInteractEvent evt) {
+        
     }
 
     @Override
