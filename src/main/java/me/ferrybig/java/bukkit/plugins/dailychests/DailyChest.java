@@ -16,6 +16,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -54,10 +55,15 @@ public class DailyChest extends JavaPlugin implements Listener {
         this.saveConfig();
         this.getLogger().info("AutoSaved!");
     }
-    
+
     @EventHandler
     public void onEvent(PlayerInteractEvent evt) {
-        
+        if (evt.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            BlockLocation block = new BlockLocation(evt.getClickedBlock());
+            if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(block.toString())) {
+                return;
+            }
+        }
     }
 
     @Override
@@ -104,7 +110,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                     }
                     if (loc.getBlock().getState() instanceof Chest) {
                         ConfigurationSection c = this.getConfig().getConfigurationSection("chests").getConfigurationSection(loc.toString());
-                        ((List<Object>)c.getList("items")).add(player.getItemInHand());
+                        ((List<Object>) c.getList("items")).add(player.getItemInHand());
                         sender.sendMessage("Added chest succesfully");
                     } else {
                         sender.sendMessage("You need to look at a chest");
