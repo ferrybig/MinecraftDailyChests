@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package me.ferrybig.java.bukkit.plugins.dailychests;
 
 import java.io.Serializable;
