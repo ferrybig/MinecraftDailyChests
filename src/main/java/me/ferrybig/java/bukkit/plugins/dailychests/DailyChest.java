@@ -28,6 +28,11 @@ public class DailyChest extends JavaPlugin implements Listener {
         this.task = this.createTask();
     }
 
+    @Override
+    public void onEnable() {
+        this.getServer().getPluginManager().registerEvents(this, this);
+    }
+
     public void scheduleSave() {
         if (this.task == null) {
             refreshTask();
