@@ -18,6 +18,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class DailyChest extends JavaPlugin implements Listener {
 
+    private long maxOverTime = 0;
+    private long timeBetweenChests = 0;
+
     public void sendMessage(CommandSender sender, String message) {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix", "[DailyChests by ferrybig]") + message));
     }
@@ -30,6 +33,7 @@ public class DailyChest extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        maxOverTime = this.getConfig().getLong("MaxOverTime", 0);
         this.getServer().getPluginManager().registerEvents(this, this);
     }
 
@@ -62,6 +66,35 @@ public class DailyChest extends JavaPlugin implements Listener {
             BlockLocation block = new BlockLocation(evt.getClickedBlock());
             if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(block.toString())) {
                 return;
+            }
+            Player p = evt.getPlayer();
+            ConfigurationSection c = this.getConfig().getConfigurationSection("chests").getConfigurationSection(block.toString());
+            boolean allowed = false;
+            long newOverTime = 0;
+            long now = System.currentTimeMillis();
+            if (c.contains("players." + p.getUniqueId())) {
+                long overTime = c.getLong("players." + p.getUniqueId() + "overTime", 0);
+                long lastOpen = c.getLong("players." + p.getUniqueId() + "lastOpen", 0);
+
+                long difference = lastOpen + overTime + timeBetweenChests - now;
+
+                if (difference < 0) {
+                    allowed = true;
+                }
+                if (difference - maxOverTime < 0) {
+                    newOverTime = -(difference - maxOverTime);
+                    allowed = true;
+                }
+            } else {
+                allowed = true;
+            }
+            if(allowed) {
+                c.set("players." + p.getUniqueId() + "lastOpen", now);
+                if(newOverTime <= 0) {
+                    c.set("players." + p.getUniqueId() + "overTime", null);
+                } else {
+                    c.set("players." + p.getUniqueId() + "overTime", newOverTime);
+                }
             }
         }
     }
