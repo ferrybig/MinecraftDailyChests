@@ -12,7 +12,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -143,8 +146,18 @@ public class DailyChest extends JavaPlugin implements Listener {
                     }
                     if (loc.getBlock().getState() instanceof Chest) {
                         ConfigurationSection c = this.getConfig().getConfigurationSection("chests").getConfigurationSection(loc.toString());
-                        ((List<Object>) c.getList("items")).add(player.getItemInHand());
-                        sender.sendMessage("Added chest succesfully");
+                        List<Object> items = new ArrayList<>();
+                        if (c.contains("items")) {
+                            items.addAll(c.getList("items"));
+                        }
+                        ItemStack item = player.getItemInHand();
+                        if (item != null) {
+                            items.add(item);
+                            c.set("items", items);
+                            sender.sendMessage("Added chest succesfully");
+                        } else {
+                            sender.sendMessage("Hold the item in hand you would like to add to the daily chest");
+                        }
                     } else {
                         sender.sendMessage("You need to look at a chest");
                         return true;
