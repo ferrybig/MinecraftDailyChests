@@ -37,6 +37,7 @@ public class DailyChest extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         maxOverTime = this.getConfig().getLong("MaxOverTime", 0);
+        timeBetweenChests = this.getConfig().getLong("timeBetweenChests", 24 * 60 * 60 * 1000);
         this.getServer().getPluginManager().registerEvents(this, this);
     }
 
