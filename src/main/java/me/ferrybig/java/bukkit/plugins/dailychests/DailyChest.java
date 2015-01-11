@@ -3,6 +3,7 @@ package me.ferrybig.java.bukkit.plugins.dailychests;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
@@ -73,7 +74,7 @@ public class DailyChest extends JavaPlugin implements Listener {
             }
             Player p = evt.getPlayer();
             ConfigurationSection c = this.getConfig().getConfigurationSection("chests").getConfigurationSection(block.toString());
-            boolean allowed = false;
+            boolean allowed;
             long newOverTime = 0;
             long now = System.currentTimeMillis();
             if (c.contains("players." + p.getUniqueId())) {
@@ -84,20 +85,26 @@ public class DailyChest extends JavaPlugin implements Listener {
 
                 if (difference < 0) {
                     allowed = true;
-                }
-                if (difference - maxOverTime < 0) {
+                } else if (difference - maxOverTime < 0) {
                     newOverTime = -(difference - maxOverTime);
                     allowed = true;
+                } else {
+                    allowed = false;
                 }
             } else {
                 allowed = true;
             }
-            if(allowed) {
-                c.set("players." + p.getUniqueId() + "lastOpen", now);
-                if(newOverTime <= 0) {
-                    c.set("players." + p.getUniqueId() + "overTime", null);
+            if (allowed) {
+                Inventory items = Bukkit.createInventory(p, InventoryType.CHEST, "Daily Reward @ " + block);
+                if (c.contains("Items")) {
+                    c.set("players." + p.getUniqueId() + "lastOpen", now);
+                    if (newOverTime <= 0) {
+                        c.set("players." + p.getUniqueId() + "overTime", null);
+                    } else {
+                        c.set("players." + p.getUniqueId() + "overTime", newOverTime);
+                    }
                 } else {
-                    c.set("players." + p.getUniqueId() + "overTime", newOverTime);
+                    p.sendMessage("This daily chest haven't been setup yet, ask the administrator of the server to set it up.");
                 }
             }
         }
