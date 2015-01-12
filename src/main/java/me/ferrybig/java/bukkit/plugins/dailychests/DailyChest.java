@@ -3,6 +3,7 @@ package me.ferrybig.java.bukkit.plugins.dailychests;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Chest;
@@ -103,6 +104,12 @@ public class DailyChest extends JavaPlugin implements Listener {
                     } else {
                         c.set("players." + p.getUniqueId() + "overTime", newOverTime);
                     }
+                    List<?> itemList = c.getList("Items");
+                    Random random = new Random();
+                    for (int i = 0; i < 10; i++) {
+                        items.all((ItemStack) itemList.get(random.nextInt(itemList.size())));
+                    }
+                    p.openInventory(items);
                 } else {
                     p.sendMessage("This daily chest haven't been setup yet, ask the administrator of the server to set it up.");
                 }
