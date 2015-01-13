@@ -106,7 +106,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                     }
                     List<?> itemList = c.getList("Items");
                     Random random = new Random();
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < Math.min(itemList.size(), 10); i++) {
                         items.all((ItemStack) itemList.get(random.nextInt(itemList.size())));
                     }
                     p.openInventory(items);
