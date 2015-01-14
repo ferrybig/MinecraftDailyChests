@@ -110,6 +110,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                         items.all((ItemStack) itemList.get(random.nextInt(itemList.size())));
                     }
                     p.openInventory(items);
+                    scheduleSave();
                 } else {
                     p.sendMessage("This daily chest haven't been setup yet, ask the administrator of the server to set it up.");
                 }
@@ -141,6 +142,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                     if (loc.getBlock().getState() instanceof Chest) {
                         this.getConfig().getConfigurationSection("chests").createSection(loc.toString());
                         sender.sendMessage("Added chest succesfully");
+                        scheduleSave();
                     } else {
                         sender.sendMessage("You need to look at a chest");
                         return true;
@@ -170,6 +172,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                             items.add(item);
                             c.set("items", items);
                             sender.sendMessage("Added chest succesfully");
+                            scheduleSave();
                         } else {
                             sender.sendMessage("Hold the item in hand you would like to add to the daily chest");
                         }
@@ -223,6 +226,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                     }
                     sender.sendMessage("Removed chest at " + loc + "!");
                     this.getConfig().getConfigurationSection("chests").set(loc.toString(), null);
+                    scheduleSave();
                 } else {
                     sender.sendMessage("Adding chests from the console isn't supported at the time");
                 }
