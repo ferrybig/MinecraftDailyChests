@@ -1,0 +1,17 @@
+main: me.ferrybig.java.bukkit.plugins.dailychests.DailyChest
+name: DailyChest
+version: 1.0.0
+author: ferrybig
+commands:
+    addChest:
+        permissions: dailychest.addChest
+    addChestItems:
+        permissions: dailychest.addChestItems
+    listChestItems:
+        permissions: dailychest.listChestItems
+    removeChestItems:
+        permissions: dailychest.removeChestItems
+    removeChest:
+        permissions: dailychest.removeChest
+    listChests:
+        permissions: dailychest.listChests
