@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Chest;
@@ -234,13 +235,18 @@ public class DailyChest extends JavaPlugin implements Listener {
             return true;
             case "listChests": {
                 List<String> toRemove = new ArrayList<>();
-                for (String str : this.getConfig().getConfigurationSection("chests").getKeys(false)) {
-                    BlockLocation chest = BlockLocation.parseLocation(str);
-                    if (chest == null) {
-                        toRemove.add(str);
-                        continue;
+                Set<String> chests = this.getConfig().getConfigurationSection("chests").getKeys(false);
+                if (!chests.isEmpty()) {
+                    for (String str : chests) {
+                        BlockLocation chest = BlockLocation.parseLocation(str);
+                        if (chest == null) {
+                            toRemove.add(str);
+                            continue;
+                        }
+                        sender.sendMessage(str);
                     }
-                    sender.sendMessage(str);
+                } else {
+                    sender.sendMessage("There aren't any chests inside the worlds!");
                 }
                 for (String remove : toRemove) {
                     this.getConfig().getConfigurationSection("chests").set(remove, null);
