@@ -44,6 +44,14 @@ public class DailyChest extends JavaPlugin implements Listener {
         this.getServer().getPluginManager().registerEvents(this, this);
     }
 
+    @Override
+    public void onDisable() {
+        if(this.task != null) {
+            this.task.cancel();
+            this.task.run();
+        }
+    }
+
     public void scheduleSave() {
         if (this.task == null) {
             refreshTask();
@@ -57,7 +65,6 @@ public class DailyChest extends JavaPlugin implements Listener {
             public void run() {
                 task = null;
                 save();
-
             }
         };
     }
