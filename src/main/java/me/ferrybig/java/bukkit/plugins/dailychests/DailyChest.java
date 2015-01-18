@@ -2,9 +2,12 @@ package me.ferrybig.java.bukkit.plugins.dailychests;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Chest;
@@ -26,6 +29,7 @@ public class DailyChest extends JavaPlugin implements Listener {
 
     private long maxOverTime = 0;
     private long timeBetweenChests = 0;
+    private final Map<UUID, Inventory> chests = new HashMap<>();
 
     public void sendMessage(CommandSender sender, String message) {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix", "[DailyChests by ferrybig]") + message));
@@ -118,6 +122,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                         items.all((ItemStack) itemList.get(random.nextInt(itemList.size())));
                     }
                     p.openInventory(items);
+                    this.chests.put(p.getUniqueId(),items);
                     scheduleSave();
                 } else {
                     p.sendMessage("This daily chest haven't been setup yet, ask the administrator of the server to set it up.");
