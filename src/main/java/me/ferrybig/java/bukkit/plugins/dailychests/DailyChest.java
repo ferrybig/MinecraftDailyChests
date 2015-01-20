@@ -18,8 +18,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -53,7 +55,7 @@ public class DailyChest extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        if(this.task != null) {
+        if (this.task != null) {
             this.task.cancel();
             this.task.run();
         }
@@ -125,7 +127,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                         items.all((ItemStack) itemList.get(random.nextInt(itemList.size())));
                     }
                     p.openInventory(items);
-                    this.chests.put(p.getUniqueId(),items);
+                    this.chests.put(p.getUniqueId(), items);
                     scheduleSave();
                 } else {
                     p.sendMessage("This daily chest haven't been setup yet, ask the administrator of the server to set it up.");
@@ -274,5 +276,15 @@ public class DailyChest extends JavaPlugin implements Listener {
             return true;
         }
         return false;
+    }
+
+    @EventHandler
+    public void onEvent(InventoryCloseEvent event) {
+
+    }
+
+    @EventHandler
+    public void onEvent(PlayerQuitEvent event) {
+
     }
 }
