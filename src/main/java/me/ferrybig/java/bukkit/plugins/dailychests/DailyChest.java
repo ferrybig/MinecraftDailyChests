@@ -280,11 +280,33 @@ public class DailyChest extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEvent(InventoryCloseEvent event) {
-
+        if (this.chests.containsKey(event.getPlayer().getUniqueId())) {
+            Inventory inv = this.chests.get(event.getPlayer().getUniqueId());
+            int size = inv.getSize();
+            ItemStack[] contents = inv.getContents();
+            for (int i = 0; i < size; i++) {
+                if (contents[i] != null) {
+                    event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), contents[i]);
+                }
+            }
+            inv.clear();
+            this.chests.remove(event.getPlayer().getUniqueId());
+        }
     }
 
     @EventHandler
     public void onEvent(PlayerQuitEvent event) {
-
+        if (this.chests.containsKey(event.getPlayer().getUniqueId())) {
+            Inventory inv = this.chests.get(event.getPlayer().getUniqueId());
+            int size = inv.getSize();
+            ItemStack[] contents = inv.getContents();
+            for (int i = 0; i < size; i++) {
+                if (contents[i] != null) {
+                    event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), contents[i]);
+                }
+            }
+            inv.clear();
+            this.chests.remove(event.getPlayer().getUniqueId());
+        }
     }
 }
