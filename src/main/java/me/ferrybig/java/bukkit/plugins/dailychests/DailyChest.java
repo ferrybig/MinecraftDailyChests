@@ -252,9 +252,9 @@ public class DailyChest extends JavaPlugin implements Listener {
             return true;
             case "listChests": {
                 List<String> toRemove = new ArrayList<>();
-                Set<String> chests = this.getConfig().getConfigurationSection("chests").getKeys(false);
-                if (!chests.isEmpty()) {
-                    for (String str : chests) {
+                Set<String> configChests = this.getConfig().getConfigurationSection("chests").getKeys(false);
+                if (!configChests.isEmpty()) {
+                    for (String str : configChests) {
                         BlockLocation chest = BlockLocation.parseLocation(str);
                         if (chest == null) {
                             toRemove.add(str);
