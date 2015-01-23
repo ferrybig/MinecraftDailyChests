@@ -222,9 +222,12 @@ public class DailyChest extends JavaPlugin implements Listener {
                             return true;
                         }
                         sender.sendMessage("Items inside this chest");
-                        sender.sendMessage(this.getConfig().getConfigurationSection("chests").getList("items").toString());
+                        List<?> list = this.getConfig().getConfigurationSection("chests").getList("items");
+                        for(int i = 0; i < list.size(); i++) {
+                            sender.sendMessage(i + ": " + list.get(i));
+                        }
                     } else {
-                        sender.sendMessage("Adding chests from the console isn't supported at the time");
+                        sender.sendMessage("Listing chests from the console isn't supported at the time");
                     }
                 }
             }
