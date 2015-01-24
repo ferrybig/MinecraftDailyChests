@@ -154,15 +154,15 @@ public class DailyChest extends JavaPlugin implements Listener {
                     @SuppressWarnings("deprecation")
                     BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
                     if (this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
-                        sender.sendMessage("There is already a chest defined at that location!");
+                        sendMessage(sender, "There is already a chest defined at that location!");
                         return true;
                     }
                     if (loc.getBlock().getState() instanceof Chest) {
                         this.getConfig().getConfigurationSection("chests").createSection(loc.toString());
-                        sender.sendMessage("Added chest succesfully");
+                        sendMessage(sender, "Added chest succesfully");
                         scheduleSave();
                     } else {
-                        sender.sendMessage("You need to look at a chest");
+                        sendMessage(sender, "You need to look at a chest");
                         return true;
                     }
                 } else {
@@ -176,7 +176,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                     @SuppressWarnings("deprecation")
                     BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
                     if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
-                        sender.sendMessage("No chest found, look at a chest!");
+                        sendMessage(sender, "No chest found, look at a chest!");
                         return true;
                     }
                     if (loc.getBlock().getState() instanceof Chest) {
@@ -189,17 +189,17 @@ public class DailyChest extends JavaPlugin implements Listener {
                         if (item != null) {
                             items.add(item);
                             c.set("items", items);
-                            sender.sendMessage("Added chest succesfully");
+                            sendMessage(sender, "Added chest succesfully");
                             scheduleSave();
                         } else {
-                            sender.sendMessage("Hold the item in hand you would like to add to the daily chest");
+                            sendMessage(sender, "Hold the item in hand you would like to add to the daily chest");
                         }
                     } else {
-                        sender.sendMessage("You need to look at a chest");
+                        sendMessage(sender, "You need to look at a chest");
                         return true;
                     }
                 } else {
-                    sender.sendMessage("Adding chests from the console isn't supported at the time");
+                    sendMessage(sender, "Adding chests from the console isn't supported at the time");
                 }
             }
             break;
@@ -207,27 +207,27 @@ public class DailyChest extends JavaPlugin implements Listener {
                 if (args.length > 1) {
                     String loc = args[0];
                     if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc)) {
-                        sender.sendMessage("There is no chest there!");
+                        sendMessage(sender, "There is no chest there!");
                         return true;
                     }
-                    sender.sendMessage("Items inside this chest");
-                    sender.sendMessage(this.getConfig().getConfigurationSection("chests").getList("items").toString());
+                    sendMessage(sender, "Items inside this chest");
+                    sendMessage(sender, this.getConfig().getConfigurationSection("chests").getList("items").toString());
                 } else {
                     if (sender instanceof Player) {
                         Player player = (Player) sender;
                         @SuppressWarnings("deprecation")
                         BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
                         if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
-                            sender.sendMessage("There is no chest there!");
+                            sendMessage(sender, "There is no chest there!");
                             return true;
                         }
-                        sender.sendMessage("Items inside this chest");
+                        sendMessage(sender, "Items inside this chest");
                         List<?> list = this.getConfig().getConfigurationSection("chests").getList("items");
                         for(int i = 0; i < list.size(); i++) {
-                            sender.sendMessage(i + ": " + list.get(i));
+                            sendMessage(sender, i + ": " + list.get(i));
                         }
                     } else {
-                        sender.sendMessage("Listing chests from the console isn't supported at the time");
+                        sendMessage(sender, "Listing chests from the console isn't supported at the time");
                     }
                 }
             }
@@ -242,14 +242,14 @@ public class DailyChest extends JavaPlugin implements Listener {
                     @SuppressWarnings("deprecation")
                     BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
                     if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
-                        sender.sendMessage("There is no chest there!");
+                        sendMessage(sender, "There is no chest there!");
                         return true;
                     }
-                    sender.sendMessage("Removed chest at " + loc + "!");
+                    sendMessage(sender, "Removed chest at " + loc + "!");
                     this.getConfig().getConfigurationSection("chests").set(loc.toString(), null);
                     scheduleSave();
                 } else {
-                    sender.sendMessage("Adding chests from the console isn't supported at the time");
+                    sendMessage(sender, "Adding chests from the console isn't supported at the time");
                 }
             }
             return true;
@@ -263,7 +263,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                             toRemove.add(str);
                             continue;
                         }
-                        sender.sendMessage(str);
+                        sendMessage(sender, str);
                     }
                 } else {
                     sender.sendMessage("There aren't any chests inside the worlds!");
@@ -274,7 +274,7 @@ public class DailyChest extends JavaPlugin implements Listener {
             }
             break;
             default: {
-                sender.sendMessage("Unknown command: " + command.getName());
+                sendMessage(sender, "Unknown command: " + command.getName());
             }
             return true;
         }
