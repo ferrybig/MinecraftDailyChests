@@ -233,7 +233,26 @@ public class DailyChest extends JavaPlugin implements Listener {
             }
             break;
             case "removeChestItems": {
-
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    @SuppressWarnings("deprecation")
+                    BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
+                    if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
+                        sendMessage(sender, "There is no chest there!");
+                        return true;
+                    }
+                    List<?> list = this.getConfig().getConfigurationSection("chests").getList("items");
+                    int number = Integer.parseInt(args[0]);
+                    if(list.size() >= number) {
+                        sendMessage(sender, "No item found at that slot");
+                    } else {
+                        list.remove(number);
+                        sendMessage(sender, "Removed item from the random chest rewards");
+                        scheduleSave();
+                    }
+                } else {
+                    sendMessage(sender, "Removing chest items from the console isn't supported at the time");
+                }
             }
             break;
             case "removeChest": {
