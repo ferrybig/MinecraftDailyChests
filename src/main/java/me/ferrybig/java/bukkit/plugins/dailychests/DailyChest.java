@@ -223,7 +223,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                         }
                         sendMessage(sender, "Items inside this chest");
                         List<?> list = this.getConfig().getConfigurationSection("chests").getList("items");
-                        for(int i = 0; i < list.size(); i++) {
+                        for (int i = 0; i < list.size(); i++) {
                             sendMessage(sender, i + ": " + list.get(i));
                         }
                     } else {
@@ -243,7 +243,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                     }
                     List<?> list = this.getConfig().getConfigurationSection("chests").getList("items");
                     int number = Integer.parseInt(args[0]);
-                    if(list.size() >= number) {
+                    if (list.size() >= number) {
                         sendMessage(sender, "No item found at that slot");
                     } else {
                         list.remove(number);
