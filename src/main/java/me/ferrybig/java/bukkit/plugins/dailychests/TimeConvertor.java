@@ -72,14 +72,4 @@ public class TimeConvertor {
         return builder.toString();
     }
 
-    public static void main(String... args) {
-        System.out.println(convertTime(1, 3, ", "));
-        System.out.println(convertTime(10, 3, ", "));
-        System.out.println(convertTime(100, 3, ", "));
-        System.out.println(convertTime(1000, 3, ", "));
-        System.out.println(convertTime(10000, 3, ", "));
-        System.out.println(convertTime(100000, 3, ", "));
-        System.out.println(convertTime(1000000, 3, ", "));
-        System.out.println(convertTime(345127364, 3, ", "));
-    }
 }
