@@ -5,16 +5,20 @@
     <artifactId>dailychests</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <dependencies>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.7.9-R0.2</version>
-        </dependency>
-    </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-    </properties>
+    <parent>
+		<groupId>me.ferrybig.javacoding.minecraft.bukkit</groupId>
+		<artifactId>bukkitplugin</artifactId>
+		<version>1.0</version>
+	</parent>
+    <scm>
+		<url>https://github.com/ferrybig/MinecraftDailyChests</url>
+		<connection>scm:git:git://github.com/ferrybig/MinecraftDailyChests</connection>
+		<developerConnection>scm:git:git@github.com:ferrybig/MinecraftDailyChests</developerConnection>
+	</scm>
+	<repositories>
+		<repository>
+			<id>ferrybig-repository</id>
+			<url>http://ferrybig.me/repository/</url>
+		</repository>
+	</repositories>
 </project>

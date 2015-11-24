@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -152,7 +153,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     @SuppressWarnings("deprecation")
-                    BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
+                    BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
                     if (this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
                         sendMessage(sender, "There is already a chest defined at that location!");
                         return true;
@@ -174,7 +175,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     @SuppressWarnings("deprecation")
-                    BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
+                    BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
                     if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
                         sendMessage(sender, "No chest found, look at a chest!");
                         return true;
@@ -216,7 +217,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                     if (sender instanceof Player) {
                         Player player = (Player) sender;
                         @SuppressWarnings("deprecation")
-                        BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
+                        BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
                         if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
                             sendMessage(sender, "There is no chest there!");
                             return true;
@@ -236,7 +237,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     @SuppressWarnings("deprecation")
-                    BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
+                    BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
                     if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
                         sendMessage(sender, "There is no chest there!");
                         return true;
@@ -259,7 +260,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     @SuppressWarnings("deprecation")
-                    BlockLocation loc = new BlockLocation(player.getLineOfSight(null, 10).get(1));
+                    BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
                     if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
                         sendMessage(sender, "There is no chest there!");
                         return true;
