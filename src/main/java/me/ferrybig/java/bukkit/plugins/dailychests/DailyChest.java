@@ -52,6 +52,7 @@ public class DailyChest extends JavaPlugin implements Listener {
         this.getConfig().set("prefix", this.getConfig().getString("prefix", "[DailyChests by ferrybig]"));
         this.getConfig().set("MaxOverTime", maxOverTime);
         this.getConfig().set("timeBetweenChests", timeBetweenChests);
+        this.save();
     }
 
     @Override
