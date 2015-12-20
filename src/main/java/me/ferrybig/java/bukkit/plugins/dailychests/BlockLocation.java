@@ -53,6 +53,8 @@ public class BlockLocation implements ConfigurationSerializable, Serializable {
         try {
             StringBuilder world = new StringBuilder(value.length() - 9);
             String[] bits = value.split("_");
+			if(bits.length < 4)
+				return null;
             int z = Integer.parseInt(bits[bits.length - 1]);
             int y = Integer.parseInt(bits[bits.length - 2]);
             int x = Integer.parseInt(bits[bits.length - 3]);
@@ -65,7 +67,7 @@ public class BlockLocation implements ConfigurationSerializable, Serializable {
                 }
             }
             return new BlockLocation(world.toString(), x, y, z);
-        } catch (Throwable t) {
+        } catch (NumberFormatException t) {
             return null;
         }
     }
