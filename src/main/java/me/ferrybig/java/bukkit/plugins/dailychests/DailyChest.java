@@ -149,18 +149,19 @@ public class DailyChest extends JavaPlugin implements Listener {
         if (!command.testPermission(sender)) {
             return true;
         }
+		final ConfigurationSection chestSection = this.getConfig().getConfigurationSection("chests");
         switch (command.getName()) {
             case "addChest": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     @SuppressWarnings("deprecation")
                     BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
-                    if (this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
+                    if (chestSection.isConfigurationSection(loc.toString())) {
                         sendMessage(sender, "There is already a chest defined at that location!");
                         return true;
                     }
                     if (loc.getBlock().getState() instanceof Chest) {
-                        this.getConfig().getConfigurationSection("chests").createSection(loc.toString());
+                        chestSection.createSection(loc.toString());
                         sendMessage(sender, "Added chest succesfully");
                         scheduleSave();
                     } else {
@@ -177,12 +178,12 @@ public class DailyChest extends JavaPlugin implements Listener {
                     Player player = (Player) sender;
                     @SuppressWarnings("deprecation")
                     BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
-                    if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
+                    if (!chestSection.isConfigurationSection(loc.toString())) {
                         sendMessage(sender, "No chest found, look at a chest!");
                         return true;
                     }
                     if (loc.getBlock().getState() instanceof Chest) {
-                        ConfigurationSection c = this.getConfig().getConfigurationSection("chests").getConfigurationSection(loc.toString());
+                        ConfigurationSection c = chestSection.getConfigurationSection(loc.toString());
                         List<Object> items = new ArrayList<>();
                         if (c.contains("items")) {
                             items.addAll(c.getList("items"));
@@ -208,23 +209,23 @@ public class DailyChest extends JavaPlugin implements Listener {
             case "listChestItems": {
                 if (args.length > 1) {
                     String loc = args[0];
-                    if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc)) {
+                    if (!chestSection.isConfigurationSection(loc)) {
                         sendMessage(sender, "There is no chest there!");
                         return true;
                     }
                     sendMessage(sender, "Items inside this chest");
-                    sendMessage(sender, this.getConfig().getConfigurationSection("chests").getList("items").toString());
+                    sendMessage(sender, chestSection.getList("items").toString());
                 } else {
                     if (sender instanceof Player) {
                         Player player = (Player) sender;
                         @SuppressWarnings("deprecation")
                         BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
-                        if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
+                        if (!chestSection.isConfigurationSection(loc.toString())) {
                             sendMessage(sender, "There is no chest there!");
                             return true;
                         }
                         sendMessage(sender, "Items inside this chest");
-                        List<?> list = this.getConfig().getConfigurationSection("chests").getList("items");
+                        List<?> list = chestSection.getList("items");
                         for (int i = 0; i < list.size(); i++) {
                             sendMessage(sender, i + ": " + list.get(i));
                         }
@@ -239,11 +240,11 @@ public class DailyChest extends JavaPlugin implements Listener {
                     Player player = (Player) sender;
                     @SuppressWarnings("deprecation")
                     BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
-                    if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
+                    if (!chestSection.isConfigurationSection(loc.toString())) {
                         sendMessage(sender, "There is no chest there!");
                         return true;
                     }
-                    List<?> list = this.getConfig().getConfigurationSection("chests").getList("items");
+                    List<?> list = chestSection.getList("items");
                     int number = Integer.parseInt(args[0]);
                     if (list.size() >= number) {
                         sendMessage(sender, "No item found at that slot");
@@ -262,12 +263,12 @@ public class DailyChest extends JavaPlugin implements Listener {
                     Player player = (Player) sender;
                     @SuppressWarnings("deprecation")
                     BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
-                    if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(loc.toString())) {
+                    if (!chestSection.isConfigurationSection(loc.toString())) {
                         sendMessage(sender, "There is no chest there!");
                         return true;
                     }
                     sendMessage(sender, "Removed chest at " + loc + "!");
-                    this.getConfig().getConfigurationSection("chests").set(loc.toString(), null);
+                    chestSection.set(loc.toString(), null);
                     scheduleSave();
                 } else {
                     sendMessage(sender, "Adding chests from the console isn't supported at the time");
@@ -276,7 +277,7 @@ public class DailyChest extends JavaPlugin implements Listener {
             return true;
             case "listChests": {
                 List<String> toRemove = new ArrayList<>();
-                Set<String> configChests = this.getConfig().getConfigurationSection("chests").getKeys(false);
+                Set<String> configChests = chestSection.getKeys(false);
                 if (!configChests.isEmpty()) {
                     for (String str : configChests) {
                         BlockLocation chest = BlockLocation.parseLocation(str);
@@ -290,7 +291,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                     sender.sendMessage("There aren't any chests inside the worlds!");
                 }
                 for (String remove : toRemove) {
-                    this.getConfig().getConfigurationSection("chests").set(remove, null);
+                    chestSection.set(remove, null);
                 }
             }
             break;
