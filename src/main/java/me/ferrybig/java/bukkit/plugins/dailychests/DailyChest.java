@@ -169,7 +169,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                         return true;
                     }
                 } else {
-                    sender.sendMessage("Adding chests from the console isn't supported at the time");
+                    sendMessage(sender, "Adding chests from the console isn't supported at the time");
                 }
             }
             return true;
@@ -288,7 +288,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                         sendMessage(sender, str);
                     }
                 } else {
-                    sender.sendMessage("There aren't any chests inside the worlds!");
+                    sendMessage(sender, "There aren't any chests inside the worlds!");
                 }
                 for (String remove : toRemove) {
                     chestSection.set(remove, null);
