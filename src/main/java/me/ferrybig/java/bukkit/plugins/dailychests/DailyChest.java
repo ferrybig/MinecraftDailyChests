@@ -178,12 +178,12 @@ public class DailyChest extends JavaPlugin implements Listener {
                     Player player = (Player) sender;
                     @SuppressWarnings("deprecation")
                     BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
-                    if (!chestSection.isConfigurationSection(loc.toString())) {
-                        sendMessage(sender, "No chest found, look at a chest!");
-                        return true;
-                    }
                     if (loc.getBlock().getState() instanceof Chest) {
-                        ConfigurationSection c = chestSection.getConfigurationSection(loc.toString());
+                        if (!chestSection.isConfigurationSection(loc.toString())) {
+							sendMessage(sender, "This chest isn't a daily chest!");
+							return true;
+						}
+						ConfigurationSection c = chestSection.getConfigurationSection(loc.toString());
                         List<Object> items = new ArrayList<>();
                         if (c.contains("items")) {
                             items.addAll(c.getList("items"));
