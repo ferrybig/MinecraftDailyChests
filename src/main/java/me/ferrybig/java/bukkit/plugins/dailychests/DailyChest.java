@@ -33,9 +33,13 @@ public class DailyChest extends JavaPlugin implements Listener {
     private long maxOverTime = 0;
     private long timeBetweenChests = 0;
     private final Map<UUID, Inventory> chests = new HashMap<>();
+    private String prefix = null;
 
     public void sendMessage(CommandSender sender, String message) {
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', this.getConfig().getString("prefix", "[DailyChests by ferrybig]") + message));
+        if (prefix == null) {
+            prefix = this.getConfig().getString("prefix", "[DailyChests by ferrybig] ");
+        }
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + message));
     }
 
     private BukkitRunnable task;
