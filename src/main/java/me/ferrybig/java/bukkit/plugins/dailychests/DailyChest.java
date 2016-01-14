@@ -37,7 +37,7 @@ public class DailyChest extends JavaPlugin implements Listener {
 
     public void sendMessage(CommandSender sender, String message) {
         if (prefix == null) {
-            prefix = this.getConfig().getString("prefix", "[DailyChests by ferrybig] ");
+            prefix = this.getConfig().getString("prefix", "[DailyChests] ");
         }
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + message));
     }
@@ -53,7 +53,7 @@ public class DailyChest extends JavaPlugin implements Listener {
         maxOverTime = this.getConfig().getLong("MaxOverTime", 0);
         timeBetweenChests = this.getConfig().getLong("timeBetweenChests", 24 * 60 * 60 * 1000);
         this.getServer().getPluginManager().registerEvents(this, this);
-        this.getConfig().set("prefix", this.getConfig().getString("prefix", "[DailyChests by ferrybig]"));
+        this.getConfig().set("prefix", this.getConfig().getString("prefix", "[DailyChests]"));
         this.getConfig().set("MaxOverTime", maxOverTime);
         this.getConfig().set("timeBetweenChests", timeBetweenChests);
         this.save();
