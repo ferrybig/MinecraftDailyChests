@@ -30,6 +30,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class DailyChest extends JavaPlugin implements Listener {
 
+    private static final int MAX_ITEMS = 10;
     private long maxOverTime = 0;
     private long timeBetweenChests = 0;
     private final Map<UUID, Inventory> chests = new HashMap<>();
@@ -129,7 +130,7 @@ public class DailyChest extends JavaPlugin implements Listener {
                     }
                     List<?> itemList = c.getList("Items");
                     Random random = new Random();
-                    for (int i = 0; i < Math.min(itemList.size(), 10); i++) {
+                    for (int i = 0; i < Math.min(itemList.size(), MAX_ITEMS); i++) {
                         items.all((ItemStack) itemList.get(random.nextInt(itemList.size())));
                     }
                     p.openInventory(items);
