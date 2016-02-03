@@ -31,6 +31,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class DailyChest extends JavaPlugin implements Listener {
 
     private static final int MAX_ITEMS = 10;
+    private static final int DEFAULT_TIME_BETWEEN_CHESTS = 24 * 60 * 60 * 1000;
     private long maxOverTime = 0;
     private long timeBetweenChests = 0;
     private final Map<UUID, Inventory> chests = new HashMap<>();
@@ -52,7 +53,7 @@ public class DailyChest extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         maxOverTime = this.getConfig().getLong("MaxOverTime", 0);
-        timeBetweenChests = this.getConfig().getLong("timeBetweenChests", 24 * 60 * 60 * 1000);
+        timeBetweenChests = this.getConfig().getLong("timeBetweenChests", DEFAULT_TIME_BETWEEN_CHESTS);
         this.getServer().getPluginManager().registerEvents(this, this);
         this.getConfig().set("prefix", this.getConfig().getString("prefix", "[DailyChests]"));
         this.getConfig().set("MaxOverTime", maxOverTime);
