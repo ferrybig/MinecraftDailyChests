@@ -95,11 +95,16 @@ public class DailyChest extends JavaPlugin implements Listener {
     public void onEvent(PlayerInteractEvent evt) {
         if (evt.getAction() == Action.RIGHT_CLICK_BLOCK) {
             BlockLocation block = new BlockLocation(evt.getClickedBlock());
-            if (!this.getConfig().getConfigurationSection("chests").isConfigurationSection(block.toString())) {
+            final String blockIdentifier = block.toString();
+            final ConfigurationSection chestSection = this.getConfig().getConfigurationSection("chests");
+            if (chestSection == null) {
+                return;
+            }
+            if (!chestSection.isConfigurationSection(blockIdentifier)) {
                 return;
             }
             Player p = evt.getPlayer();
-            ConfigurationSection c = this.getConfig().getConfigurationSection("chests").getConfigurationSection(block.toString());
+            ConfigurationSection c = chestSection.getConfigurationSection(blockIdentifier);
             boolean allowed;
             long newOverTime = 0;
             long now = System.currentTimeMillis();
