@@ -7,30 +7,32 @@ public class TimeConvertor {
 
     private enum TimeUnits {
 
-        MILISECONDS("miliseconds"),
-        SECONDS("seconds", 1000, MILISECONDS),
-        MINUTES("minutes", 60, SECONDS),
-        HOURS("hours", 60, MINUTES),
-        DAYS("days", 24, HOURS),
-        WEEKS("weeks", 7, DAYS),
-        MONTHS("months", 4, WEEKS),
-        YEARS("years", 365, DAYS);
+        MILISECONDS("miliseconds", "milisecond"),
+        SECONDS("seconds", "second", 1000, MILISECONDS),
+        MINUTES("minutes", "minute", 60, SECONDS),
+        HOURS("hours", "hour", 60, MINUTES),
+        DAYS("days", "day", 24, HOURS),
+        WEEKS("weeks", "week", 7, DAYS),
+        MONTHS("months", "month", 4, WEEKS),
+        YEARS("years", "year", 365, DAYS);
 
-        private TimeUnits(String friendlyName, long commonDivider,
+        private TimeUnits(String friendlyName, String friendlyNameSingular, long commonDivider,
             TimeUnits parent) {
-            this(friendlyName, commonDivider * parent.getCommonDivider());
+            this(friendlyName, friendlyNameSingular, commonDivider * parent.getCommonDivider());
         }
 
-        private TimeUnits(String friendlyName, long commonDivider) {
+        private TimeUnits(String friendlyName, String friendlyNameSingular, long commonDivider) {
             this.friendlyName = friendlyName;
+			this.friendlyNameSingular = friendlyNameSingular;
             this.commonDivider = commonDivider;
         }
 
-        private TimeUnits(String friendlyName) {
-            this(friendlyName, 1);
+        private TimeUnits(String friendlyName, String friendlyNameSingular) {
+            this(friendlyName, friendlyNameSingular, 1);
         }
 
         private final String friendlyName;
+		private final String friendlyNameSingular;
         private final long commonDivider;
 
         public long getCommonDivider() {
@@ -40,6 +42,10 @@ public class TimeConvertor {
         public String getFriendlyName() {
             return friendlyName;
         }
+
+		public String getFriendlyNameSingular() {
+			return friendlyNameSingular;
+		}
     }
 
     public static String convertTime(long time,
@@ -67,7 +73,8 @@ public class TimeConvertor {
             }
             time -= tempTime * lowestUnit.getCommonDivider();
             builder.append(tempTime).append(' ')
-                .append(lowestUnit.getFriendlyName());
+                .append(tempTime == 1 ? lowestUnit.getFriendlyNameSingular() :
+						lowestUnit.getFriendlyName());
         }
         return builder.toString();
     }
