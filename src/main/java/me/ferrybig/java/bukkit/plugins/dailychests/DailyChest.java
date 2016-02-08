@@ -272,7 +272,6 @@ public class DailyChest extends JavaPlugin implements Listener {
             case "removeChest": {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    @SuppressWarnings("deprecation")
                     BlockLocation loc = new BlockLocation(player.getLineOfSight((Set<Material>)null, 10).get(1));
                     if (!chestSection.isConfigurationSection(loc.toString())) {
                         sendMessage(sender, "There is no chest there!");
