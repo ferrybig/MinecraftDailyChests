@@ -72,9 +72,11 @@ public class TimeConvertor {
                 builder.append(delimiter);
             }
             time -= tempTime * lowestUnit.getCommonDivider();
-            builder.append(tempTime).append(' ')
-                .append(tempTime == 1 ? lowestUnit.getFriendlyNameSingular() :
-						lowestUnit.getFriendlyName());
+            builder.append(tempTime).append(' ');
+			if (tempTime == 1) 
+				builder.append(lowestUnit.getFriendlyNameSingular());
+			else
+				builder.append(lowestUnit.getFriendlyName());
         }
         return builder.toString();
     }
