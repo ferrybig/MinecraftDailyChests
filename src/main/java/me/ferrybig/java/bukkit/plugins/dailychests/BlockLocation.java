@@ -25,13 +25,13 @@ public class BlockLocation implements ConfigurationSerializable, Serializable {
 		String w = null;
 
 		if (args.containsKey("x")) {
-			x = (Integer) args.get("x");
+			x = Integer.parseInt(args.get("x").toString());
 		}
 		if (args.containsKey("y")) {
-			y = (Integer) args.get("y");
+			y = Integer.parseInt(args.get("y").toString());
 		}
 		if (args.containsKey("z")) {
-			z = (Integer) args.get("z");
+			z = Integer.parseInt(args.get("z").toString());
 		}
 		if (args.containsKey("w")) {
 			w = args.get("w").toString();
