@@ -150,10 +150,7 @@ public class BlockLocation implements ConfigurationSerializable, Serializable {
 	 */
 	public Chunk getChunk() {
 		World world = this.getWorld();
-		if (world == null) {
-			return null;
-		}
-		return world.getChunkAt(this.x >> 4, this.z >> 4);
+		return world == null ? null : world.getChunkAt(this.x >> 4, this.z >> 4);
 	}
 
 	/**
