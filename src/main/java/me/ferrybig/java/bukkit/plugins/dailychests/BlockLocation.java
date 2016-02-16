@@ -250,7 +250,7 @@ public class BlockLocation implements ConfigurationSerializable, Serializable {
 
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> result = new TreeMap<String, Object>();
+		Map<String, Object> result = new TreeMap<>();
 
 		result.put("x", x);
 		result.put("y", y);
