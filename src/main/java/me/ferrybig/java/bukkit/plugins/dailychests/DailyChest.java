@@ -55,7 +55,7 @@ public class DailyChest extends JavaPlugin implements Listener {
 		maxOverTime = this.getConfig().getLong("MaxOverTime", 0);
 		timeBetweenChests = this.getConfig().getLong("timeBetweenChests", DEFAULT_TIME_BETWEEN_CHESTS);
 		this.getServer().getPluginManager().registerEvents(this, this);
-		this.getConfig().set("prefix", this.getConfig().getString("prefix", "[DailyChests]"));
+		this.getConfig().set("prefix", this.getConfig().getString("prefix", "[DailyChests] "));
 		this.getConfig().set("MaxOverTime", maxOverTime);
 		this.getConfig().set("timeBetweenChests", timeBetweenChests);
 		this.save();
