@@ -143,7 +143,7 @@ public class DailyChest extends JavaPlugin implements Listener {
 					this.chests.put(p.getUniqueId(), items);
 					scheduleSave();
 				} else {
-					p.sendMessage("This daily chest haven't been setup yet, ask the administrator of the server to set it up.");
+					p.sendMessage("This daily chest isn't been setup yet, ask the administrator off the server to set it up.");
 				}
 			}
 		}
