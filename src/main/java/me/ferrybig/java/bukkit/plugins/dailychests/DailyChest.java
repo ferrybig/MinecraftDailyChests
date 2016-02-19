@@ -109,8 +109,8 @@ public class DailyChest extends JavaPlugin implements Listener {
 			long newOverTime = 0;
 			long now = System.currentTimeMillis();
 			if (c.contains("players." + p.getUniqueId())) {
-				long overTime = c.getLong("players." + p.getUniqueId() + "overTime", 0);
-				long lastOpen = c.getLong("players." + p.getUniqueId() + "lastOpen", 0);
+				long overTime = c.getLong("players." + p.getUniqueId() + ".overTime", 0);
+				long lastOpen = c.getLong("players." + p.getUniqueId() + ".lastOpen", 0);
 
 				long difference = lastOpen + overTime + timeBetweenChests - now;
 
@@ -128,11 +128,11 @@ public class DailyChest extends JavaPlugin implements Listener {
 			if (allowed) {
 				Inventory items = Bukkit.createInventory(p, InventoryType.CHEST, "Daily Reward @ " + block);
 				if (c.contains("Items")) {
-					c.set("players." + p.getUniqueId() + "lastOpen", now);
+					c.set("players." + p.getUniqueId() + ".lastOpen", now);
 					if (newOverTime <= 0) {
-						c.set("players." + p.getUniqueId() + "overTime", null);
+						c.set("players." + p.getUniqueId() + ".overTime", null);
 					} else {
-						c.set("players." + p.getUniqueId() + "overTime", newOverTime);
+						c.set("players." + p.getUniqueId() + ".overTime", newOverTime);
 					}
 					List<?> itemList = c.getList("Items");
 					Random random = new Random();
