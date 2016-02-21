@@ -36,6 +36,7 @@ public class DailyChest extends JavaPlugin implements Listener {
 	private long timeBetweenChests = 0;
 	private final Map<UUID, Inventory> chests = new HashMap<>();
 	private String prefix = null;
+	private Random random = new Random();
 
 	public void sendMessage(CommandSender sender, String message) {
 		if (prefix == null) {
@@ -135,7 +136,6 @@ public class DailyChest extends JavaPlugin implements Listener {
 						c.set("players." + p.getUniqueId() + ".overTime", newOverTime);
 					}
 					List<?> itemList = c.getList("Items");
-					Random random = new Random();
 					for (int i = 0; i < Math.min(itemList.size(), MAX_ITEMS); i++) {
 						items.all((ItemStack) itemList.get(random.nextInt(itemList.size())));
 					}
