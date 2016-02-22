@@ -127,7 +127,7 @@ public class DailyChest extends JavaPlugin implements Listener {
 				allowed = true;
 			}
 			if (allowed) {
-				Inventory items = Bukkit.createInventory(p, InventoryType.CHEST, "Daily Reward @ " + block);
+				Inventory items = Bukkit.createInventory(p, InventoryType.CHEST, "Daily Reward @ " + c.getString("name", block.toString()));
 				if (c.contains("Items")) {
 					c.set("players." + p.getUniqueId() + ".lastOpen", now);
 					if (newOverTime <= 0) {
